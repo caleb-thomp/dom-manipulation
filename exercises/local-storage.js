@@ -38,3 +38,37 @@
  */
 
 // Your code goes here...
+const container = document.querySelector('.cardsContainer');
+const cards = document.querySelectorAll('.card');
+
+let storage = JSON.parse(localStorage.getItem('favorites')) || {
+  items: {},
+};
+
+if (storage.items) {
+  Object.keys(storage.items).forEach((id) => {
+    const item = document.getElementById(id);
+    if (item) {
+      item.dataset.fav = 'true';
+      item.classList.add('red');
+    }
+  });
+}
+
+const toggleItem = (item) => {
+  const id = item.getAttribute('id');
+  const isFav = item.dataset.fav === 'true';
+  item.dataset.fav = isFav ? 'false' : 'true';
+  item.classList.toggle('red', !isFav);
+  storage.items[id] = !isFav ? true : undefined;
+  localStorage.setItem('favorites', JSON.stringify(storage));
+};
+
+const callbackFn = (e) => {
+  const item = e.target;
+  if (item.classList.contains('card')) {
+    toggleItem(item);
+  }
+};
+
+container.addEventListener('click', callbackFn);
