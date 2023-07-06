@@ -54,11 +54,10 @@ const updateCollections = (id, direction) => {
       : main.append.bind(main, element);
   const iconClass =
     direction === 'toFavs'
-      ? 'fa-heart-crack'
-      : 'fa-heart-circle-plus';
+      ? 'fa-solid fa-heart-crack'
+      : 'fa-solid fa-heart-circle-plus';
   move();
-  element.firstElementChild.classList.remove(iconClass);
-  element.firstElementChild.classList.add(iconClass);
+  element.firstElementChild.className = iconClass;
 };
 
 
@@ -81,7 +80,7 @@ allItems.forEach((item) => {
   item.addEventListener('click', () => {
     const collection = item.parentElement.id;
     const id = item.id;
-    const direction = collection === "main" ? "toFavs" : "toMain";
+    let direction = collection === "main" ? "toFavs" : "toMain";
     updateCollections(id, direction);
   });
 });
